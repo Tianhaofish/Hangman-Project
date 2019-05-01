@@ -3,14 +3,18 @@
 class HangmanLogic:
 
   #Constructors---------------------------------------------------------------
+  
   def __init__(self, word):
 
     self.__word = word
     self.__letter_positions = {}
+    self.__random_word = {
+    self.__num_wrong_guesses = 0
+    self.__letter_list_no_repeats = []
 
   #Mutators-------------------------------------------------------------------
 
-  def __set_letter_positions(self, self.__word):
+  def __set_letter_positions(self):
     letter_positions = {}
     let_list = self.__create_letter_list(self.__word)
     let_list_copy = let_list[:]
@@ -25,10 +29,17 @@ class HangmanLogic:
           let_list.insert(index, '0')
     self.__letter_positions = letter_positions
 
+  def __set_letter_list_no_repeats(self):
+    
+
   #Predicates-----------------------------------------------------------------
   
-  def __create_letter_list(self, self.__word):
+  def __create_letter_list(self):
     letter_list = []
     for letter in self.__word:
       letter_list.append(letter.lower())
     return letter_list
+
+  def __win_or_lose(self):
+
+  

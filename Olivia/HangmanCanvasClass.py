@@ -1,8 +1,8 @@
-#CanvasFunction
+#HangmanCanvas
 
 from tkinter import *
 
-class CanvasFunctions:
+class HangmanCanvas:
 
   #Contructor-----------------------------------------------------------------
   
