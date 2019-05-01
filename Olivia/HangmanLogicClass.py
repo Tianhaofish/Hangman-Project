@@ -11,6 +11,7 @@ class HangmanLogic:
     self.__random_word = {
     self.__num_wrong_guesses = 0
     self.__letter_list_no_repeats = []
+    self.__guess = ''
 
   #Mutators-------------------------------------------------------------------
 
@@ -30,6 +31,12 @@ class HangmanLogic:
     self.__letter_positions = letter_positions
 
   def __set_letter_list_no_repeats(self):
+
+  def __set_guess(self, guess):
+
+  def __remove_correct_guess(self):
+
+  def __increment_wrong_guesses(self):
     
 
   #Predicates-----------------------------------------------------------------
@@ -41,5 +48,7 @@ class HangmanLogic:
     return letter_list
 
   def __win_or_lose(self):
+
+  def __guess_right_or_wrong(self):
 
   
