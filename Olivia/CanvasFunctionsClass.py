@@ -1,11 +1,17 @@
 #CanvasFunction
 
+from tkinter import *
+
 class CanvasFunctions:
 
-  def __init__(self):
+  #Contructor-----------------------------------------------------------------
+  
+  def __init__(self, frame, height, width, bgcolor):
 
-    self.
+    self.__canvas = Canvas(frame, height=height, width=width, bg=bgcolor)
 
+  #
+  
   def draw_gallow(self):
 
   def draw_head(self):

@@ -1,6 +1,7 @@
 #HangmanGUI
 
 from tkinter import *
+from CanvasFunctions import *
 
 class HangmanGUI:
 
@@ -17,6 +18,6 @@ class HangmanGUI:
     self.__bot_frame = Frame(self.__win)
     self.__bot_frame.pack()
 
-    self.canvas = Canvas(self.__left_frame, height=400, width=510, \
-                         bg='lightblue')
+    self.__canvas = 
+
 HangmanGUI()
