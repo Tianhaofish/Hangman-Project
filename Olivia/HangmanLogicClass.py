@@ -31,13 +31,14 @@ class HangmanLogic:
     self.__letter_positions = letter_positions
 
   def __set_letter_list_no_repeats(self):
-
+    
   def __set_guess(self, guess):
 
-  def __remove_correct_guess(self):
 
+  def __remove_correct_guess(self):
+    self.__letter_list_no_repeats.remove(self.__guess)
   def __increment_wrong_guesses(self):
-    
+    self.__num_wrong_guesses += 1
 
   #Predicates-----------------------------------------------------------------
   
@@ -50,5 +51,5 @@ class HangmanLogic:
   def __win_or_lose(self):
 
   def __guess_right_or_wrong(self):
-
+     
   
