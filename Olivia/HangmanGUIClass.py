@@ -1,7 +1,9 @@
 #HangmanGUI
 
 from tkinter import *
+from tkinter import messagebox
 from WordClass import *
+from HangmanLogicClass import *
 
 class HangmanGUI:
 
@@ -11,10 +13,14 @@ class HangmanGUI:
   GUI_FONT = ('Calibri', 12)
   BG_COLOR = 'seashell3'
   BUTTON_COLOR = 'light steel blue'
+  LETTER_INDEX_POSITIONS = {}
 
   #Constructor----------------------------------------------------------------
   
   def __init__(self):
+
+    self.__game = None
+    self.__word = None
 
     self.__win = Tk()
 
@@ -118,6 +124,8 @@ class HangmanGUI:
                                        command=self.__set_random_word, \
                                        font=self.GUI_FONT, bg=self.BUTTON_COLOR)
     self.__random_word_button.pack()
+
+    mainloop()
     
 
 
@@ -127,26 +135,85 @@ class HangmanGUI:
     return
 
   def __set_word(self):
-    word = self.__set_word_entry_box.get()
-    category = self.__set_category_entry_box.get()
+    if self.__game == None:
+      word = self.__set_word_entry_box.get()
+      category = self.__set_category_entry_box.get()
 
-    word_object = Word(word, category)
+      self.__word = Word(word, category)
 
-    self.__category_val = category
+      self.__game = Game()
+      
+      self.__game.set_correct_letter_list(\
+        self.__word.get_letter_list_no_repeats())
 
-    self.__draw_lines()
+      category = self.__word.get_category()
+    
+      self.__category_val.set(category)
+
+      self.__draw_lines()
+
+    else:
+
+      answer = messagebox.askyesno('Warning!', 'You have not finished ' +\
+                                      'this game! Are you sure you would ' +\
+                                      'like to start a new one?')
+      if answer == True:
+        word = self.__set_word_entry_box.get()
+        category = self.__set_category_entry_box.get()
+
+        self.__word = Word(word, category)
+
+        self.__game = Game()
+        self.__game.set_correct_letter_list(\
+          self.__word.get_letter_list_no_repeats())
+
+        category = self.__word.get_category()
+    
+        self.__category_val.set(category)
+
+        self.__draw_lines()
+        
+    self.__set_word_entry_box.delete(0, END)
+    self.__set_category_entry_box.delete(0, END)
     return
 
   def __set_random_word(self):
-    word = Word('', '')
+    if self.__game == None:
+      self.__word = Word('', '')
     
-    set_random_word_and_category()
+      self.__word.set_random_word_and_category()
 
-    category = get_category()
+      self.__game = Game()
+      
+      self.__game.set_correct_letter_list(\
+        self.__word.get_letter_list_no_repeats())
+
+      category = self.__word.get_category()
     
-    self.__category_val = category
+      self.__category_val.set(category)
 
-    self.__draw_lines()
+      self.__draw_lines()
+
+    else:
+
+      answer = messagebox.askyesno('Warning!', 'You have not finished ' +\
+                                      'this game! Are you sure you would ' +\
+                                      'like to start a new one?')
+      if answer == True:
+        self.__word = Word('', '')
+
+        self.__game = Game()
+    
+        self.__word.set_random_word_and_category()
+        self.__game.set_correct_letter_list(\
+          self.__word.get_letter_list_no_repeats())
+
+        category = self.__word.get_category()
+    
+        self.__category_val.set(category)
+
+        self.__draw_lines()
+        
     return
 
   def __reset_game(self):
@@ -155,13 +222,20 @@ class HangmanGUI:
   #Mutators-------------------------------------------------------------------
 
   def __draw_lines(self):
-    word = get_word()
-    for letter in word:
+    i = 0
+    for letter in self.__word.get_word():
       if letter != ' ':
         self.__canvas.create_line((20 + i), 350, (50 + i), 350, width=2.0)
         i += 40
       else:
         i += 40
+    return
+
+  def __draw_gallow(self):
+    self.__canvas.create_line(140, 280, 330, 280, width=2.0)
+    self.__canvas.create_line(235, 280, 235, 50, width=2.0)
+    self.__canvas.create_line(235, 50, 330, 50, width=2.0)
+    self.__canvas.create_line(330, 50, 330, 100, width=2.0)
     return
 '''
   def __draw_head(self):

@@ -1,6 +1,6 @@
 #HangmanLogic
 
-class HangmanLogic:
+class Game:
 
   #Class Variables------------------------------------------------------------
 
@@ -37,15 +37,16 @@ class HangmanLogic:
     self.__num_wrong_guesses += 1
 
   def guess_letter(self, letter):
+    return
     
 
   #Predicates-----------------------------------------------------------------
 
   def is_game_lost(self):
-    return self.__num_wrong_guess == self.MAX_WRONG
+    return self.__num_wrong_guesses == self.MAX_WRONG
 
   def is_game_won(self):
-    return len(self.__letter_list_no_repeats) == 0
+    return len(self.__correct_letter_list) == 0
 
   def is_correct_guess(self, guess):
     return guess in self.__letter_list_no_repeats
