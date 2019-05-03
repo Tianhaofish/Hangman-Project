@@ -55,17 +55,21 @@ class HangmanLogic:
   def __increment_wrong_guesses(self):
     self.__num_wrong_guesses += 1
 <<<<<<< HEAD
+<<<<<<< HEAD
 
   def guess_letter(self, letter):
     
 =======
 >>>>>>> d4a94c213ae057b447ccdf47cc3f558978655d52
+=======
+>>>>>>> cd8ef0bc13fdd3d5056a9ef3cbe5b4f9d1b6d646
 
   #Predicates-----------------------------------------------------------------
 
   def is_game_lost(self):
     return self.__num_wrong_guess == self.MAX_WRONG
 
+<<<<<<< HEAD
   def is_game_won(self):
     return len(self.__letter_list_no_repeats) == 0
 
@@ -81,4 +85,8 @@ class HangmanLogic:
   def __guess_right_or_wrong(self):
      
 >>>>>>> d4a94c213ae057b447ccdf47cc3f558978655d52
+=======
+  def __guess_right_or_wrong(self):
+     
+>>>>>>> cd8ef0bc13fdd3d5056a9ef3cbe5b4f9d1b6d646
   
