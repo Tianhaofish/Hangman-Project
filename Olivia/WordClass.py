@@ -28,6 +28,7 @@ class Word:
     return self.__word
   
   def get_word_length(self):
+    self.__length = len(self.__word)
     return self.__length
 
   def get_category(self):
@@ -37,12 +38,10 @@ class Word:
     return self.__letter_positions[letter]
 
   def get_letter_list_no_repeats(self):
+    return self.__letter_list_no_repeats
   
 
   #Mutators-------------------------------------------------------------------
-
-  def __set_word_length(self):
-    self.__length = len(self.__word)
 
   def __set_letter_positions(self):
     letter_positions = {}
@@ -59,7 +58,7 @@ class Word:
           let_list.insert(index, '0')
     self.__letter_positions = letter_positions
 
-  def __set_random_word_and_category(self):
+  def set_random_word_and_category(self):
     index = random.randint(0, (len(self.__random_word_categories) - 1))
     self.__category = self.__random_word_categories[index]
     word_list = self.__random_word_dict[self.__category]
@@ -67,12 +66,14 @@ class Word:
     self.__word = word_list.pop(word_index)
     if len(word_list) == 0:
       random_word_categories.remove(category)
-    self.__set_word_length()
 
   #iterate over letters in self.__word and add each unique letter
   ##(no repeated letters) to a list, where each letter is its own
   ## element. set list to self.__letter_list_no_repeats
   def __set_letter_list_no_repeats(self):
+    for i in self.__word:
+      if i not in self.__letter_list_no_repeats:
+        self.__letter_list_no_repeats.append(i)
 
 
     

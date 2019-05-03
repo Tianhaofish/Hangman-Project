@@ -1,7 +1,7 @@
 #HangmanGUI
 
 from tkinter import *
-#from WordClass import *
+from WordClass import *
 
 class HangmanGUI:
 
@@ -123,15 +123,34 @@ class HangmanGUI:
 
   #Event Handlers-------------------------------------------------------------
 
- # def __guess_letter(self):
+  def __guess_letter(self):
+    return
 
   def __set_word(self):
+    word = self.__set_word_entry_box.get()
+    category = self.__set_category_entry_box.get()
+
+    word_object = Word(word, category)
+
+    self.__category_val = category
+
+    self.__draw_lines()
     return
 
   def __set_random_word(self):
+    word = Word('', '')
+    
+    set_random_word_and_category()
+
+    category = get_category()
+    
+    self.__category_val = category
+
+    self.__draw_lines()
     return
-'''
+
   def __reset_game(self):
+    return
   
   #Mutators-------------------------------------------------------------------
 
@@ -143,7 +162,8 @@ class HangmanGUI:
         i += 40
       else:
         i += 40
-
+    return
+'''
   def __draw_head(self):
 
   def __draw_body(self):
