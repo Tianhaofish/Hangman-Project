@@ -23,14 +23,18 @@ class Game:
   def get_correct_letter_list_copy(self):
     return self.__correct_letter_list_copy
 
+  def get_correct_letter_list(self):
+    return self.__correct_letter_list
+
   def get_num_wrong_guesses(self):
     return self.__num_wrong_guesses
 
   #Mutators-------------------------------------------------------------------
 
   def set_correct_letter_list(self, letter_list):
-    self.__correct_letter_list = letter_list
-    self.__correct_letter_list_copy = letter_list
+    l_list=letter_list
+    self.__correct_letter_list = l_list
+    self.__correct_letter_list_copy = l_list+l_list
 
   def __add_guess_to_guess_list(self, guess):
     self.__guess_list.append(guess)
