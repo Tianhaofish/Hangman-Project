@@ -14,30 +14,31 @@ def get_letter_position(let):
                 let_list.remove(letter)
                 let_list.insert(index, '0')
     a = letter_positions
+    b = a[str(let)]
 
+    index_list=[]
+    for i in b:
+      index_list.append(i)
 
-    b=a[str(let)]
-    print(b)
-    return b
+    #print(index_list)
+
+    return index_list
 
 get_letter_position('p')
 
+def coordinates(let):
+    coor={}
+    for i in get_letter_position(let):
+        coor[let]=500+i*50
+    a=coor[let]
+    print(a)
+    return a
+    print(a)
+coordinates('a')
 
 
-def cor(let):
-    a=get_letter_position(let)
-    b=a
 
 
-
-#cor('p')
-
-
-
-def pp(let):
-  a=cor(let)
-
-#pp('p')
 
 
 
