@@ -129,10 +129,6 @@ class HangmanGUI:
     self.__guess_entry_box = Entry(self.__mid_right_frame2, width=10)
     self.__guess_entry_box.pack(side='left')
     self.__guess_entry_box.bind('<Return>', self.__guess_letter)
-    self.__instruction_label=Label(self.__mid_right_frame2, \
-                                      text='Hit <Enter> to guess', \
-                                      font=self.GUI_FONT, bg=self.BG_COLOR)
-    self.__instruction_label.pack(side='bottom')
 
     #Pick random word button-------------------------
 
@@ -174,15 +170,42 @@ class HangmanGUI:
 
   #Event Handlers-------------------------------------------------------------
 
-<<<<<<< HEAD
-  def __guess_letter(self, letter):
+  def __guess_letter(self, event):
+    letter = self.__guess_entry_box.get()
     self.__game.process_guess(letter)
 
+    guess_list = self.__game.get_guess_list()
+
+    self.__guess_list_var.set(guess_list)
+
+    if self.__game.is_correct_guess(letter):
+      
+      position_list = self.__word.get_letter_position(letter)
+      self.__write_correct_guess(position_list, letter)
+      
+    else:
+      num_wrong = self.__game.get_num_wrong_guesses()
+
+      if num_wrong == 1:
+        self.__draw_head()
+      elif num_wrong == 2:
+        self.__draw_body()
+      elif num_wrong == 3:
+        self.__draw_leg1()
+      elif num_wrong == 4:
+        self.__draw_leg2()
+      elif num_wrong == 5:
+        self.__draw_arm1()
+      elif num_wrong == 6:
+        self.__draw_arm2()
+      
+    if self.__game.is_game_lost():
+      self.__lose_game()
+      
+    elif self.__game.is_game_won():
+      self.__lose_game()
+
     self.__guess_entry_box.delete(0, END)
-=======
-  def __guess_letter(self):
-    self.__game.process_guess(guess)
->>>>>>> c4d93af5fd0db9a09be2be3fa0633b4f269c62e6
     return
 
   def __set_word(self):
@@ -281,53 +304,45 @@ class HangmanGUI:
     self.__canvas.create_line(235, 280, 235, 50, width=2.0)
     self.__canvas.create_line(235, 50, 330, 50, width=2.0)
     self.__canvas.create_line(330, 50, 330, 100, width=2.0)
-
+    return
 
   def __draw_head(self):
     self.__canvas.create_oval(310, 100, 350, 140, width=2.0)
 
   def __draw_body(self):
-      self.__canvas.create_line(330, 140, 330, 200, width=2.0)
+    self.__canvas.create_line(330, 140, 330, 200, width=2.0)
 
   def __draw_leg1(self):
-      self.__canvas.create_line(330,200,300,230,width=2.0)
+    self.__canvas.create_line(330,200,300,230,width=2.0)
 
   def __draw_leg2(self):
-      self.__canvas.create_line(330, 200, 360, 230, width=2.0)
+    self.__canvas.create_line(330, 200, 360, 230, width=2.0)
 
   def __draw_arm1(self):
-      self.__canvas.create_line(330,170,300,150, width=2.0)
+    self.__canvas.create_line(330,170,300,150, width=2.0)
 
   def __draw_arm2(self):
-      self.__canvas.create_line(330, 170, 360, 150, width=2.0)
-  def __write_correct_guess(self, position_list,letter):
-    for position in position_list:
-       coordinates=self.LETTER_INDEX_POSITIONS[position]
-       self.__canvas.create_text(coordinates, text=letter, font=self.CANVAS_FONT)
+    self.__canvas.create_line(330, 170, 360, 150, width=2.0)
+    
+  def __write_correct_guess(self, position_list, letter):
+    return
+  
   def __win_game(self):
-    answer = messagebox.askyescancel("Question",\+
-      "Congratulation! Do you want to try this Game again?")
-    if answer==True:
-      self.__reset_game()
-    else:
-      return None
-    
-    
-    
+    return
 
   def __lose_game(self):
-   answer = messagebox.askretrycancel("Question", \+
-   "Sad! You have used up all chances. Do you want to try this game again?")
-   if answer==True:
-      self.__reset_game()
-    else:
-      return None
+    return
 
-   def __reset_game(self):
-     self.game=None
-     self.
+  def __reset_game(self):
+    self.__game = None
+    self.__word = None
+    self.__guess_list_var.set('')
+    self.__category_val.set('')
+    self.__canvas.delete(ALL)
+    self.__draw_gallow()
+    return
 
-#Predicates-----------------------------------------------------------------
+  #Predicates-----------------------------------------------------------------
       
 
 HangmanGUI()
