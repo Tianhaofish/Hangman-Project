@@ -330,22 +330,16 @@ class HangmanGUI:
   def __draw_arm2(self):
     self.__canvas.create_line(330, 170, 360, 150, width=2.0)
     
-  def __write_correct_guess(self, position_list,letter):
-    for position in position_list:
-       coordinates=self.LETTER_INDEX_POSITIONS[position]
-       self.__canvas.create_text(coordinates, text=letter, \
-                                 font=self.CANVAS_FONT)
+  def __write_correct_guess(self, position_list, letter):
+    return
+  
   def __win_game(self):
-    answer = messagebox.askyescancel("Question",\
-      "Congratulation! Do you want to try this Game again?")
-    if answer==True:
-      self.__reset_game()
+    self.__reset_game()
+    return
 
   def __lose_game(self):
-   answer = messagebox.askretrycancel("Question", \
-   "Sad! You have used up all chances. Do you want to try this game again?")
-   if answer==True:
-      self.__reset_game()
+    self.__reset_game()
+    return
 
   def __reset_game(self):
     self.__game = None
