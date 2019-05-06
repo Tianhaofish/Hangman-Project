@@ -14,7 +14,10 @@ class HangmanGUI:
   CANVAS_COLOR = 'alice blue'
   BG_COLOR = 'lightblue3'
   BUTTON_COLOR = 'medium turquoise'
-  LETTER_INDEX_POSITIONS = {}
+  LETTER_INDEX_POSITIONS = {0:(35, 335), 1:(75, 335), 2:(115, 335), \
+                            3:(155, 335), 4:(195, 335), 5:(235, 335), \
+                            6:(275, 335), 7:(315, 335), 8:(355, 335), \
+                            9:(395, 335), 10:(435, 335), 11:(475, 335)}
 
   #Constructor----------------------------------------------------------------
   
@@ -167,8 +170,40 @@ class HangmanGUI:
 
   #Event Handlers-------------------------------------------------------------
 
-  def __guess_letter(self, letter):
+  def __guess_letter(self, event):
+    letter = self.__guess_entry_box.get()
     self.__game.process_guess(letter)
+
+    guess_list = self.__game.get_guess_list()
+
+    self.__guess_list_var.set(guess_list)
+
+    if self.__game.is_correct_guess(letter):
+      
+      position_list = self.__word.get_letter_position(letter)
+      self.__write_correct_guess(position_list, letter)
+      
+    else:
+      num_wrong = self.__game.get_num_wrong_guesses()
+
+      if num_wrong == 1:
+        self.__draw_head()
+      elif num_wrong == 2:
+        self.__draw_body()
+      elif num_wrong == 3:
+        self.__draw_leg1()
+      elif num_wrong == 4:
+        self.__draw_leg2()
+      elif num_wrong == 5:
+        self.__draw_arm1()
+      elif num_wrong == 6:
+        self.__draw_arm2()
+      
+    if self.__game.is_game_lost():
+      self.__lose_game()
+      
+    elif self.__game.is_game_won():
+      self.__lose_game()
 
     self.__guess_entry_box.delete(0, END)
     return
@@ -270,28 +305,43 @@ class HangmanGUI:
     self.__canvas.create_line(235, 50, 330, 50, width=2.0)
     self.__canvas.create_line(330, 50, 330, 100, width=2.0)
     return
-'''
+
   def __draw_head(self):
+    self.__canvas.create_oval(310, 100, 350, 140, width=2.0)
 
   def __draw_body(self):
+    self.__canvas.create_line(330, 140, 330, 200, width=2.0)
 
   def __draw_leg1(self):
+    self.__canvas.create_line(330,200,300,230,width=2.0)
 
   def __draw_leg2(self):
+    self.__canvas.create_line(330, 200, 360, 230, width=2.0)
 
   def __draw_arm1(self):
+    self.__canvas.create_line(330,170,300,150, width=2.0)
 
   def __draw_arm2(self):
-
-  def __write_correct_guess(self, guess):
-
+    self.__canvas.create_line(330, 170, 360, 150, width=2.0)
+    
+  def __write_correct_guess(self, position_list, letter):
+    return
+  
   def __win_game(self):
+    return
 
   def __lose_game(self):
+    return
 
   def __reset_game(self):
+    self.__game = None
+    self.__word = None
+    self.__guess_list_var.set('')
+    self.__category_val.set('')
+    self.__canvas.delete(ALL)
+    self.__draw_gallow()
     return
-'''
+
   #Predicates-----------------------------------------------------------------
       
 

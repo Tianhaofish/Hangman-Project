@@ -137,6 +137,7 @@ class HangmanGUI:
   #Event Handlers-------------------------------------------------------------
 
   def __guess_letter(self):
+    self.__game.process_guess(guess)
     return
 
   def __set_word(self):
