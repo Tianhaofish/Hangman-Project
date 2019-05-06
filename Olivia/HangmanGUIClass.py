@@ -14,7 +14,10 @@ class HangmanGUI:
   CANVAS_COLOR = 'alice blue'
   BG_COLOR = 'lightblue3'
   BUTTON_COLOR = 'medium turquoise'
-  LETTER_INDEX_POSITIONS = {}
+  LETTER_INDEX_POSITIONS = {0:(35, 335), 1:(75, 335), 2:(115, 335), \
+                            3:(155, 335), 4:(195, 335), 5:(235, 335), \
+                            6:(275, 335), 7:(315, 335), 8:(355, 335), \
+                            9:(395, 335), 10:(435, 335), 11:(475, 335)}
 
   #Constructor----------------------------------------------------------------
   
@@ -126,6 +129,10 @@ class HangmanGUI:
     self.__guess_entry_box = Entry(self.__mid_right_frame2, width=10)
     self.__guess_entry_box.pack(side='left')
     self.__guess_entry_box.bind('<Return>', self.__guess_letter)
+    self.__instruction_label=Label(self.__mid_right_frame2, \
+                                      text='Hit <Enter> to guess', \
+                                      font=self.GUI_FONT, bg=self.BG_COLOR)
+    self.__instruction_label.pack(side='bottom')
 
     #Pick random word button-------------------------
 
@@ -269,30 +276,53 @@ class HangmanGUI:
     self.__canvas.create_line(235, 280, 235, 50, width=2.0)
     self.__canvas.create_line(235, 50, 330, 50, width=2.0)
     self.__canvas.create_line(330, 50, 330, 100, width=2.0)
-    return
-'''
+
+
   def __draw_head(self):
+    self.__canvas.create_oval(310, 100, 350, 140, width=2.0)
 
   def __draw_body(self):
+      self.__canvas.create_line(330, 140, 330, 200, width=2.0)
 
   def __draw_leg1(self):
+      self.__canvas.create_line(330,200,300,230,width=2.0)
 
   def __draw_leg2(self):
+      self.__canvas.create_line(330, 200, 360, 230, width=2.0)
 
   def __draw_arm1(self):
+      self.__canvas.create_line(330,170,300,150, width=2.0)
 
   def __draw_arm2(self):
-
-  def __write_correct_guess(self, guess):
-
+      self.__canvas.create_line(330, 170, 360, 150, width=2.0)
+  def __write_correct_guess(self, position_list,letter):
+    for position in position_list:
+       coordinates=self.LETTER_INDEX_POSITIONS[position]
+       self.__canvas.create_text(coordinates, text=letter, font=self.CANVAS_FONT)
   def __win_game(self):
+    answer = messagebox.askyescancel("Question",\+
+      "Congratulation! Do you want to try this Game again?")
+    if answer==True:
+      self.__reset_game()
+    else:
+      return None
+    
+    
+    
 
   def __lose_game(self):
+   answer = messagebox.askretrycancel("Question", \+
+   "Sad! You have used up all chances. Do you want to try this game again?")
+   if answer==True:
+      self.__reset_game()
+    else:
+      return None
 
-  def __reset_game(self):
-    return
-'''
-  #Predicates-----------------------------------------------------------------
+   def __reset_game(self):
+     self.game=None
+     self.
+
+#Predicates-----------------------------------------------------------------
       
 
 HangmanGUI()
