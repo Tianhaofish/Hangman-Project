@@ -39,7 +39,7 @@ class Word:
     let_list = create_letter_list(self.__word)
     let_list_copy = let_list[:]
     for letter in let_list_copy:
-      if letter in let_list:
+      if letter in let_list and letter != ' ':
         index_list = []
         while letter in let_list:
           index = let_list.index(letter)

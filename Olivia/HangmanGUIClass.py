@@ -74,6 +74,14 @@ class HangmanGUI:
                                     bg=self.BG_COLOR)
     self.__mid_right_frame5.pack()
 
+    self.__mid_right_frame6 = Frame(self.__right_frame, padx=5, pady=10, \
+                                    bg=self.BG_COLOR)
+    self.__mid_right_frame6.pack()
+
+    self.__mid_right_frame7 = Frame(self.__right_frame, padx=5, pady=10, \
+                                    bg=self.BG_COLOR)
+    self.__mid_right_frame7.pack()
+
     self.__bot_right_frame = Frame(self.__right_frame, padx=5, \
                                    bg=self.BG_COLOR)
     self.__bot_right_frame.pack()
@@ -125,13 +133,50 @@ class HangmanGUI:
                                        font=self.GUI_FONT, bg=self.BUTTON_COLOR)
     self.__random_word_button.pack()
 
+    #Display guesses---------------------------------
+
+    self.__guess_list_label = Label(self.__mid_right_frame6, \
+                                    text='Guesses: ', font=self.GUI_FONT, \
+                                    bg=self.BG_COLOR)
+    self.__guess_list_label.pack()
+
+    self.__guess_list_var = StringVar()
+    self.__guess_list_var.set('')
+
+    self.__guess_list_var_label = Label(self.__mid_right_frame6, \
+                                        textvariable=self.__guess_list_var, \
+                                        font=self.GUI_FONT, bg=self.BG_COLOR)
+    self.__guess_list_var_label.pack()
+
+    #Guess letter------------------------------------
+
+    self.__guess_letter_label = Label(self.__mid_right_frame7, \
+                                      text='Guess Letter:', \
+                                      font=self.GUI_FONT, bg=self.BG_COLOR)
+    self.__guess_letter_label.pack(side='left')
+
+    self.__guess_entry_box = Entry(self.__mid_right_frame7, width=10)
+    self.__guess_entry_box.pack(side='left')
+    self.__guess_entry_box.bind('<Return>', self.__guess_letter)
+
+    #Reset Game--------------------------------------
+
+    self.__reset_game_button = Button(self.__bot_right_frame, \
+                                       text='Reset Game', \
+                                       command=self.__reset_game, \
+                                       font=self.GUI_FONT, bg=self.BUTTON_COLOR)
+    self.__reset_game_button.pack()
+
     mainloop()
     
 
 
   #Event Handlers-------------------------------------------------------------
 
-  def __guess_letter(self):
+  def __guess_letter(self, letter):
+    self.__game.process_guess(letter)
+
+    self.__guess_entry_box.delete(0, END)
     return
 
   def __set_word(self):

@@ -36,8 +36,12 @@ class Game:
   def __increment_wrong_guesses(self):
     self.__num_wrong_guesses += 1
 
-  def guess_letter(self, letter):
-    return
+  def process_guess(self, guess):
+    self.__add_guess_to_guess_list(guess)
+    if self.is_correct_guess(guess):
+      self.__remove_correct_guess(guess)
+    else:
+      self.__increment_wrong_guesses()
     
 
   #Predicates-----------------------------------------------------------------
@@ -49,7 +53,7 @@ class Game:
     return len(self.__correct_letter_list) == 0
 
   def is_correct_guess(self, guess):
-    return guess in self.__letter_list_no_repeats
+    return guess in self.__correct_letter_list
 
   def is_game_over(self):
     return self.is_game_lost() or self.is_game_won()
