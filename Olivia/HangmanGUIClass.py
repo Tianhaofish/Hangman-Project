@@ -172,38 +172,44 @@ class HangmanGUI:
 
   def __guess_letter(self, event):
     letter = self.__guess_entry_box.get()
-    self.__game.process_guess(letter)
 
-    guess_list = self.__game.get_guess_list()
-
-    self.__guess_list_var.set(guess_list)
-
-    if self.__game.is_correct_guess(letter):
-      
-      position_list = self.__word.get_letter_position(letter)
-      self.__write_correct_guess(position_list, letter)
-      
+    if letter in self.__game.get_guess_list():
+      messagebox.showwarning('Warning!', 'You have already guessed this letter!')
+    elif self.__word == None:
+      messagebox.showwarning('Warning!', 'You need to start a game first!')
     else:
-      num_wrong = self.__game.get_num_wrong_guesses()
+      self.__game.process_guess(letter)
 
-      if num_wrong == 1:
-        self.__draw_head()
-      elif num_wrong == 2:
-        self.__draw_body()
-      elif num_wrong == 3:
-        self.__draw_leg1()
-      elif num_wrong == 4:
-        self.__draw_leg2()
-      elif num_wrong == 5:
-        self.__draw_arm1()
-      elif num_wrong == 6:
-        self.__draw_arm2()
+      guess_list = self.__game.get_guess_list()
+
+      self.__guess_list_var.set(guess_list)
+
+      if self.__game.is_correct_guess(letter):
       
-    if self.__game.is_game_lost():
-      self.__lose_game()
+        position_list = self.__word.get_letter_position(letter)
+        self.__write_correct_guess(position_list, letter)
       
-    elif self.__game.is_game_won():
-      self.__lose_game()
+      else:
+        num_wrong = self.__game.get_num_wrong_guesses()
+
+        if num_wrong == 1:
+          self.__draw_head()
+        elif num_wrong == 2:
+          self.__draw_body()
+        elif num_wrong == 3:
+          self.__draw_leg1()
+        elif num_wrong == 4:
+          self.__draw_leg2()
+        elif num_wrong == 5:
+          self.__draw_arm1()
+        elif num_wrong == 6:
+          self.__draw_arm2()
+      
+      if self.__game.is_game_lost():
+        self.__lose_game()
+      
+      elif self.__game.is_game_won():
+        self.__lose_game()
 
     self.__guess_entry_box.delete(0, END)
     return
@@ -328,9 +334,11 @@ class HangmanGUI:
     return
   
   def __win_game(self):
+    self.__reset_game()
     return
 
   def __lose_game(self):
+    self.__reset_game()
     return
 
   def __reset_game(self):
