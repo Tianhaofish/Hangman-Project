@@ -187,10 +187,12 @@ class HangmanGUI:
       if self.__game.is_correct_guess(letter):
       
         position_list = self.__word.get_letter_position(letter)
+        print(position_list)
         self.__write_correct_guess(position_list, letter)
       
       else:
         num_wrong = self.__game.get_num_wrong_guesses()
+        print(num_wrong)
 
         if num_wrong == 1:
           self.__draw_head()
@@ -209,7 +211,7 @@ class HangmanGUI:
         self.__lose_game()
       
       elif self.__game.is_game_won():
-        self.__lose_game()
+        self.__win_game()
 
     self.__guess_entry_box.delete(0, END)
     return
@@ -223,8 +225,8 @@ class HangmanGUI:
 
       self.__game = Game()
       
-      self.__game.set_correct_letter_list(\
-        self.__word.get_letter_list_no_repeats())
+      self.__game.set_correct_letter_list(self.__word.get_letter_list_no_repeats())
+      print(self.__game.get_correct_letter_list_copy())
     
       self.__category_val.set(category)
 
@@ -242,8 +244,7 @@ class HangmanGUI:
         self.__word = Word(word, category)
 
         self.__game = Game()
-        self.__game.set_correct_letter_list(\
-          self.__word.get_letter_list_no_repeats())
+        self.__game.set_correct_letter_list(self.__word.get_letter_list_no_repeats())
     
         self.__category_val.set(category)
 
@@ -261,8 +262,7 @@ class HangmanGUI:
 
       self.__game = Game()
       
-      self.__game.set_correct_letter_list(\
-        self.__word.get_letter_list_no_repeats())
+      self.__game.set_correct_letter_list(self.__word.get_letter_list_no_repeats())
 
       category = self.__word.get_category()
     
@@ -281,8 +281,7 @@ class HangmanGUI:
         self.__game = Game()
     
         self.__word.set_random_word_and_category()
-        self.__game.set_correct_letter_list(\
-          self.__word.get_letter_list_no_repeats())
+        self.__game.set_correct_letter_list(self.__word.get_letter_list_no_repeats())
 
         category = self.__word.get_category()
     
@@ -336,7 +335,7 @@ class HangmanGUI:
        self.__canvas.create_text(coordinates, text=letter, \
                                  font=self.CANVAS_FONT)
   def __win_game(self):
-    answer = messagebox.askyescancel("Question",\
+    answer = messagebox.askyesno("Question",\
       "Congratulation! Do you want to try this Game again?")
     if answer==True:
       self.__reset_game()

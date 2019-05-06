@@ -38,14 +38,14 @@ class Word:
     letter_positions = {}
     let_list = create_letter_list(self.__word)
     let_list_copy = let_list[:]
-    for letter in let_list_copy:
-      if letter in let_list and letter != ' ':
+    for let in let_list_copy:
+      if let in let_list and let != ' ':
         index_list = []
-        while letter in let_list:
-          index = let_list.index(letter)
+        while let in let_list:
+          index = let_list.index(let)
           index_list.append(index)
-          letter_positions[letter] = index_list
-          let_list.remove(letter)
+          letter_positions[let] = index_list
+          let_list.remove(let)
           let_list.insert(index, '0')
     self.__letter_positions = letter_positions
     return self.__letter_positions[letter]

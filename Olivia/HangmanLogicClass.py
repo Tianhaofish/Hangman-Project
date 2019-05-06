@@ -12,12 +12,16 @@ class Game:
 
     self.__num_wrong_guesses = 0
     self.__correct_letter_list = []
+    self.__correct_letter_list_copy = []
     self.__guess_list = []
 
   #Accessors------------------------------------------------------------------
 
   def get_guess_list(self):
     return self.__guess_list
+
+  def get_correct_letter_list_copy(self):
+    return self.__correct_letter_list_copy
 
   def get_num_wrong_guesses(self):
     return self.__num_wrong_guesses
@@ -26,6 +30,7 @@ class Game:
 
   def set_correct_letter_list(self, letter_list):
     self.__correct_letter_list = letter_list
+    self.__correct_letter_list_copy = letter_list
 
   def __add_guess_to_guess_list(self, guess):
     self.__guess_list.append(guess)
@@ -53,7 +58,7 @@ class Game:
     return len(self.__correct_letter_list) == 0
 
   def is_correct_guess(self, guess):
-    return guess in self.__correct_letter_list
+    return guess in self.__correct_letter_list_copy
 
   def is_game_over(self):
     return self.is_game_lost() or self.is_game_won()
