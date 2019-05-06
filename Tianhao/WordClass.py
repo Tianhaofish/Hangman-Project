@@ -20,7 +20,7 @@ class Word:
                                           'Canada', 'Croatia', 'Germany'], \
                                'movie':['Endgame', 'Avatar', 'Jurassic Park', \
                                         'Iron Man', 'Toy Story', 'Interstellar'],\
-                               'fruit':['banana','water mellon','apple','peach','cucumber']}
+                               'fruit':['banana','watermellon','apple','peach','cucumber']}
     self.__random_word_categories = ['animal', 'sport', 'country', 'movie','fruit']
 
   #Accessors------------------------------------------------------------------

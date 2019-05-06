@@ -13,7 +13,10 @@ class HangmanGUI:
   GUI_FONT = ('Calibri', 12)
   BG_COLOR = 'seashell3'
   BUTTON_COLOR = 'light steel blue'
-  LETTER_INDEX_POSITIONS = {}
+  LETTER_INDEX_POSITIONS = {0:(35, 335), 1:(75, 335), 2:(115, 335), \
+                            3:(155, 335), 4:(195, 335), 5:(235, 335), \
+                            6:(275, 335), 7:(315, 335), 8:(355, 335), \
+                            9:(395, 335), 10:(435, 335), 11:(475, 335)}
 
   #Constructor----------------------------------------------------------------
   
@@ -242,9 +245,6 @@ class HangmanGUI:
 
   def __draw_head(self):
     self.__canvas.create_oval(310, 100, 350, 140, width=2.0)
-
-
-
 
   def __draw_body(self):
       self.__canvas.create_line(330, 140, 330, 200, width=2.0)
