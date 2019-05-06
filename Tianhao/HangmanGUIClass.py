@@ -11,8 +11,9 @@ class HangmanGUI:
 
   CANVAS_FONT = ('Calibri', 20)
   GUI_FONT = ('Calibri', 12)
-  BG_COLOR = 'seashell3'
-  BUTTON_COLOR = 'light steel blue'
+  CANVAS_COLOR = 'alice blue'
+  BG_COLOR = 'lightblue3'
+  BUTTON_COLOR = 'medium turquoise'
   LETTER_INDEX_POSITIONS = {0:(35, 335), 1:(75, 335), 2:(115, 335), \
                             3:(155, 335), 4:(195, 335), 5:(235, 335), \
                             6:(275, 335), 7:(315, 335), 8:(355, 335), \
@@ -41,25 +42,23 @@ class HangmanGUI:
     #Canvas------------------------------------------
 
     self.__canvas = Canvas(self.__left_frame, height=400, width=510, \
-                           bg='rosybrown2', highlightbackground='black')
+                           bg=self.CANVAS_COLOR, highlightbackground='black')
     self.__canvas.pack()
 
     #Draw gallow-------------------------------------
 
-    self.__draw_gallow()
-    self.__draw_head()
-    self.__draw_body()
-    self.__draw_leg1()
-    self.__draw_leg2()
-    self.__draw_arm1()
-    self.__draw_arm2()
+    self.__canvas.create_line(140, 280, 330, 280, width=2.0)
+    self.__canvas.create_line(235, 280, 235, 50, width=2.0)
+    self.__canvas.create_line(235, 50, 330, 50, width=2.0)
+    self.__canvas.create_line(330, 50, 330, 100, width=2.0)
+
     #frames within right frame-----------------------
 
-    self.__top_right_frame = Frame(self.__right_frame, padx=5, pady=10, \
+    self.__top_right_frame = Frame(self.__right_frame, padx=5, pady=15, \
                                    bg=self.BG_COLOR)
     self.__top_right_frame.pack()
 
-    self.__mid_right_frame1 = Frame(self.__right_frame, padx=5, \
+    self.__mid_right_frame1 = Frame(self.__right_frame, padx=5, pady=10, \
                                     bg=self.BG_COLOR)
     self.__mid_right_frame1.pack()
 
@@ -67,7 +66,7 @@ class HangmanGUI:
                                     bg=self.BG_COLOR)
     self.__mid_right_frame2.pack()
 
-    self.__mid_right_frame3 = Frame(self.__right_frame, padx=5, \
+    self.__mid_right_frame3 = Frame(self.__right_frame, padx=5, pady=50,\
                                     bg=self.BG_COLOR)
     self.__mid_right_frame3.pack()
 
@@ -75,9 +74,17 @@ class HangmanGUI:
                                     bg=self.BG_COLOR)
     self.__mid_right_frame4.pack()
 
-    self.__mid_right_frame5 = Frame(self.__right_frame, padx=5, pady=10, \
+    self.__mid_right_frame5 = Frame(self.__right_frame, padx=5, \
                                     bg=self.BG_COLOR)
     self.__mid_right_frame5.pack()
+
+    self.__mid_right_frame6 = Frame(self.__right_frame, padx=5, \
+                                    bg=self.BG_COLOR)
+    self.__mid_right_frame6.pack()
+
+    self.__mid_right_frame7 = Frame(self.__right_frame, padx=5, pady=6, \
+                                    bg=self.BG_COLOR)
+    self.__mid_right_frame7.pack()
 
     self.__bot_right_frame = Frame(self.__right_frame, padx=5, \
                                    bg=self.BG_COLOR)
@@ -97,38 +104,69 @@ class HangmanGUI:
                                       font=self.GUI_FONT, bg=self.BG_COLOR)
     self.__category_val_label.pack(side='left')
 
-    #Word and category entry boxes, labels, and button
+    #Display guesses---------------------------------
 
-    self.__set_word_label = Label(self.__mid_right_frame1, text='Set word:', \
-                                  font=self.GUI_FONT, bg=self.BG_COLOR)
-    self.__set_word_label.pack()
+    self.__guess_list_label = Label(self.__mid_right_frame1, \
+                                    text='Guesses: ', font=self.GUI_FONT, \
+                                    bg=self.BG_COLOR)
+    self.__guess_list_label.pack()
 
-    self.__word_label = Label(self.__mid_right_frame2, text='Word', padx=12, \
-                              font=self.GUI_FONT, bg=self.BG_COLOR)
-    self.__word_label.pack(side='left')
+    self.__guess_list_var = StringVar()
+    self.__guess_list_var.set('')
 
-    self.__set_word_entry_box = Entry(self.__mid_right_frame2, width=25)
-    self.__set_word_entry_box.pack(side='left')
+    self.__guess_list_var_label = Label(self.__mid_right_frame1, \
+                                        textvariable=self.__guess_list_var, \
+                                        font=self.GUI_FONT, bg=self.BG_COLOR)
+    self.__guess_list_var_label.pack()
 
-    self.__category_label = Label(self.__mid_right_frame3, text='Category', \
-                                  font=self.GUI_FONT, bg=self.BG_COLOR)
-    self.__category_label.pack(side='left')
+    #Guess letter------------------------------------
 
-    self.__set_category_entry_box = Entry(self.__mid_right_frame3, width=25)
-    self.__set_category_entry_box.pack(side='left')
+    self.__guess_letter_label = Label(self.__mid_right_frame2, \
+                                      text='Guess Letter:', \
+                                      font=self.GUI_FONT, bg=self.BG_COLOR)
+    self.__guess_letter_label.pack(side='left')
 
-    self.__set_word_button = Button(self.__mid_right_frame4, text='Set Word', \
-                                    command=self.__set_word, font=self.GUI_FONT, \
-                                    bg=self.BUTTON_COLOR)
-    self.__set_word_button.pack()
+    self.__guess_entry_box = Entry(self.__mid_right_frame2, width=10)
+    self.__guess_entry_box.pack(side='left')
+    self.__guess_entry_box.bind('<Return>', self.__guess_letter)
+    self.__instruction_label=Label(self.__mid_right_frame2, \
+                                      text='Hit <Enter> to guess', \
+                                      font=self.GUI_FONT, bg=self.BG_COLOR)
+    self.__instruction_label.pack(side='bottom')
 
     #Pick random word button-------------------------
 
-    self.__random_word_button = Button(self.__mid_right_frame5, \
+    self.__random_word_button = Button(self.__mid_right_frame3, \
                                        text='Pick Random Word', \
                                        command=self.__set_random_word, \
                                        font=self.GUI_FONT, bg=self.BUTTON_COLOR)
     self.__random_word_button.pack()
+
+    #Word and category entry boxes, labels, and button
+
+    self.__set_word_label = Label(self.__mid_right_frame4, text='Set word:', \
+                                  font=self.GUI_FONT, bg=self.BG_COLOR)
+    self.__set_word_label.pack()
+
+    self.__word_label = Label(self.__mid_right_frame5, text='Word', padx=12, \
+                              font=self.GUI_FONT, bg=self.BG_COLOR)
+    self.__word_label.pack(side='left')
+
+    self.__set_word_entry_box = Entry(self.__mid_right_frame5, width=25)
+    self.__set_word_entry_box.pack(side='left')
+
+    self.__category_label = Label(self.__mid_right_frame6, text='Category', \
+                                  font=self.GUI_FONT, bg=self.BG_COLOR)
+    self.__category_label.pack(side='left')
+
+    self.__set_category_entry_box = Entry(self.__mid_right_frame6, width=25)
+    self.__set_category_entry_box.pack(side='left')
+
+    self.__set_word_button = Button(self.__mid_right_frame7, text='Set Word', \
+                                    command=self.__set_word, font=self.GUI_FONT, \
+                                    bg=self.BUTTON_COLOR)
+    self.__set_word_button.pack()
+
 
     mainloop()
     
@@ -136,7 +174,10 @@ class HangmanGUI:
 
   #Event Handlers-------------------------------------------------------------
 
-  def __guess_letter(self):
+  def __guess_letter(self, letter):
+    self.__game.process_guess(letter)
+
+    self.__guess_entry_box.delete(0, END)
     return
 
   def __set_word(self):
@@ -150,8 +191,6 @@ class HangmanGUI:
       
       self.__game.set_correct_letter_list(\
         self.__word.get_letter_list_no_repeats())
-
-      category = self.__word.get_category()
     
       self.__category_val.set(category)
 
@@ -171,8 +210,6 @@ class HangmanGUI:
         self.__game = Game()
         self.__game.set_correct_letter_list(\
           self.__word.get_letter_list_no_repeats())
-
-        category = self.__word.get_category()
     
         self.__category_val.set(category)
 
@@ -220,15 +257,13 @@ class HangmanGUI:
         self.__draw_lines()
         
     return
-
-  def __reset_game(self):
-    return
   
   #Mutators-------------------------------------------------------------------
 
   def __draw_lines(self):
     i = 0
-    for letter in self.__word.get_word():
+    word = self.__word.get_word()
+    for letter in word:
       if letter != ' ':
         self.__canvas.create_line((20 + i), 350, (50 + i), 350, width=2.0)
         i += 40
@@ -260,13 +295,34 @@ class HangmanGUI:
 
   def __draw_arm2(self):
       self.__canvas.create_line(330, 170, 360, 150, width=2.0)
- # def __write_correct_guess(self, guess):
+  def __write_correct_guess(self, position_list,letter):
+    for position in position_list:
+       coordinates=self.LETTER_INDEX_POSITIONS[position]
+       self.__canvas.create_text(coordinates, text=letter, font=self.CANVAS_FONT)
+  def __win_game(self):
+    answer = messagebox.askyescancel("Question",\+
+      "Congratulation! Do you want to try this Game again?")
+    if answer==True:
+      self.__reset_game()
+    else:
+      return None
+    
+    
+    
 
- # def __win_game(self):
+  def __lose_game(self):
+   answer = messagebox.askretrycancel("Question", \+
+   "Sad! You have used up all chances. Do you want to try this game again?")
+   if answer==True:
+      self.__reset_game()
+    else:
+      return None
 
- # def __lose_game(self):
+   def __reset_game(self):
+     self.game=None
+     self.
 
-  #Predicates-----------------------------------------------------------------
+#Predicates-----------------------------------------------------------------
       
 
 HangmanGUI()
