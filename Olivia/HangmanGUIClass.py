@@ -3,7 +3,7 @@
 from tkinter import *
 from tkinter import messagebox
 from WordClass import *
-from HangmanLogicClass import *
+from GameClass import *
 
 class HangmanGUI:
 
@@ -13,7 +13,7 @@ class HangmanGUI:
   GUI_FONT = ('Calibri', 12)
   CANVAS_COLOR = 'alice blue'
   BG_COLOR = 'lightblue3'
-  BUTTON_COLOR = 'medium turquoise'
+  BUTTON_COLOR = 'sky blue'
   LETTER_INDEX_POSITIONS = {0:(35, 335), 1:(75, 335), 2:(115, 335), \
                             3:(155, 335), 4:(195, 335), 5:(235, 335), \
                             6:(275, 335), 7:(315, 335), 8:(355, 335), \
@@ -171,13 +171,24 @@ class HangmanGUI:
   #Event Handlers-------------------------------------------------------------
 
   def __guess_letter(self, event):
-    letter = self.__guess_entry_box.get()
+    
+    letter = self.__guess_entry_box.get().lower()
 
-    if letter in self.__game.get_guess_list():
-      messagebox.showwarning('Warning!', 'You have already guessed this letter!')
+    if not self.__is_valid_letter(letter):
+
+      messagebox.showwarning('Warning!', 'That is not a valid guess!')
+
     elif self.__word == None:
+      
       messagebox.showwarning('Warning!', 'You need to start a game first!')
+      
+    elif letter in self.__game.get_guess_list():
+      
+      messagebox.showwarning('Warning!', \
+                             'You have already guessed this letter!')
+      
     else:
+
       self.__game.process_guess(letter)
 
       guess_list = self.__game.get_guess_list()
@@ -187,12 +198,11 @@ class HangmanGUI:
       if self.__game.is_correct_guess(letter):
       
         position_list = self.__word.get_letter_position(letter)
-        print(position_list)
         self.__write_correct_guess(position_list, letter)
       
       else:
+        
         num_wrong = self.__game.get_num_wrong_guesses()
-        print(num_wrong)
 
         if num_wrong == 1:
           self.__draw_head()
@@ -208,25 +218,35 @@ class HangmanGUI:
           self.__draw_arm2()
       
       if self.__game.is_game_lost():
+        
         self.__lose_game()
       
       elif self.__game.is_game_won():
+        
         self.__win_game()
 
     self.__guess_entry_box.delete(0, END)
     return
 
   def __set_word(self):
-    if self.__game == None:
-      word = self.__set_word_entry_box.get()
-      category = self.__set_category_entry_box.get()
+
+    word = self.__set_word_entry_box.get()
+    category = self.__set_category_entry_box.get()
+
+    if self.__is_valid_word(word) == False:
+
+      messagebox.showwarning('Warning!', 'That is not a valid word! ' +\
+                             'Please be sure your word only contains ' +\
+                             'letters and spaces. And is 12 characters ' +\
+                             'or less')
+
+    elif self.__game == None:
 
       self.__word = Word(word, category)
 
       self.__game = Game()
       
       self.__game.set_correct_letter_list(self.__word.get_letter_list_no_repeats())
-      print(self.__game.get_correct_letter_list_copy())
     
       self.__category_val.set(category)
 
@@ -238,8 +258,6 @@ class HangmanGUI:
                                       'this game! Are you sure you would ' +\
                                       'like to start a new one?')
       if answer == True:
-        word = self.__set_word_entry_box.get()
-        category = self.__set_category_entry_box.get()
 
         self.__word = Word(word, category)
 
@@ -341,9 +359,16 @@ class HangmanGUI:
       self.__reset_game()
 
   def __lose_game(self):
-   answer = messagebox.askretrycancel("Question", \
-   "Sad! You have used up all chances. Do you want to try this game again?")
-   if answer==True:
+
+    message = 'Sad! You have used up all chances. The correct word was: \n' +\
+              self.__word.get_word() + '\n' + \
+              "Do you want to try this game again?"
+                        
+    
+    answer = messagebox.askretrycancel("Question", message)
+    
+    if answer == True:
+     
       self.__reset_game()
 
   def __reset_game(self):
@@ -356,6 +381,16 @@ class HangmanGUI:
     return
 
   #Predicates-----------------------------------------------------------------
-      
 
+  def __is_valid_letter(self, letter):
+    return letter.isalpha() and len(letter)==1
+
+  def __is_valid_word(self, set_word):
+    word_list = set_word.split(' ')
+    for word in word_list:
+      if not word.isalpha():
+        return False
+    if len(set_word) > 12:
+      return False
+      
 HangmanGUI()

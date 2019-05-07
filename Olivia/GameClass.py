@@ -30,7 +30,7 @@ class Game:
 
   def set_correct_letter_list(self, letter_list):
     self.__correct_letter_list = letter_list
-    self.__correct_letter_list_copy = letter_list
+    self.__correct_letter_list_copy = letter_list + letter_list
 
   def __add_guess_to_guess_list(self, guess):
     self.__guess_list.append(guess)
@@ -44,7 +44,7 @@ class Game:
   def process_guess(self, guess):
     self.__add_guess_to_guess_list(guess)
     if self.is_correct_guess(guess):
-      self.__remove_correct_guess(guess)
+       self.__remove_correct_guess(guess)
     else:
       self.__increment_wrong_guesses()
     
@@ -59,9 +59,6 @@ class Game:
 
   def is_correct_guess(self, guess):
     return guess in self.__correct_letter_list_copy
-
-  def is_game_over(self):
-    return self.is_game_lost() or self.is_game_won()
 
 
   
