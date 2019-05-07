@@ -192,17 +192,25 @@ class HangmanGUI:
       self.__game.process_guess(letter)
 
       guess_list = self.__game.get_guess_list()
-
+      print(guess_list)
+      b=self.__game.get_correct_letter_list_copy()
+      print(b)
+      c=self.__game.get_correct_letter_list()
+      print(c)
       self.__guess_list_var.set(guess_list)
 
       if self.__game.is_correct_guess(letter):
-      
+        print(1)
         position_list = self.__word.get_letter_position(letter)
         self.__write_correct_guess(position_list, letter)
       
       else:
         
         num_wrong = self.__game.get_num_wrong_guesses()
+<<<<<<< HEAD
+=======
+        print(3)
+>>>>>>> 46c0775d9a0af68283803ef402197226aee0b07f
 
         if num_wrong == 1:
           self.__draw_head()
