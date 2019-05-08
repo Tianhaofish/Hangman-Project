@@ -64,7 +64,3 @@ class Word:
     for letter in word:
       letter_list.append(letter.lower())
     return letter_list
-
-
-
-    
