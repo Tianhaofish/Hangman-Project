@@ -1,4 +1,32 @@
-#HangmanGUI
+'''
+Olivia Klett
+Tianhao Dai
+olett1@binghamton.edu
+tdai2@binghamton.edu
+Lab Section A52
+Elizabeth Vorshylo
+Final project
+'''
+'''
+ANALYSIS
+
+RESTATEMENT: 
+
+CONSTANTS:
+
+IN IT:
+
+
+METHODS:
+  Accessors -
+
+    
+  Mutators -
+
+    
+  Predicates -
+
+'''
 
 from tkinter import *
 from tkinter import messagebox
@@ -35,9 +63,6 @@ class HangmanGUI:
 
     self.__right_frame = Frame(self.__win, bg=self.BG_COLOR)
     self.__right_frame.pack(side='left')
-
-    self.__bot_frame = Frame(self.__win, bg=self.BG_COLOR)
-    self.__bot_frame.pack()
 
     #Canvas------------------------------------------
 
@@ -275,6 +300,7 @@ class HangmanGUI:
                                       'this game! Are you sure you would ' +\
                                       'like to start a new one?')
       if answer == True:
+        self.__reset_game()
 
         self.__word = Word(word, category)
 
@@ -311,6 +337,8 @@ class HangmanGUI:
                                       'this game! Are you sure you would ' +\
                                       'like to start a new one?')
       if answer == True:
+        self.__reset_game()
+        
         self.__word = Word('', '')
 
         self.__game = Game()
