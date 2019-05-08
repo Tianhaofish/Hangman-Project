@@ -10,7 +10,15 @@ Final project
 '''
 ANALYSIS
 
-RESTATEMENT: 
+RESTATEMENT:
+
+INPUT from keyboard:
+  self.__guess_entry_box (str)
+  self.__set_word_entry_box (str)
+  self.__set_category_entry_box (str)
+
+OUTPUT to monitor:
+  
 
 CONSTANTS:
 
