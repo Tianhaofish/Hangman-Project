@@ -211,6 +211,13 @@ class HangmanGUI:
 
 
   #Event Handlers-------------------------------------------------------------
+# Examine the input of the entry box.If input is valid, pass the 
+# entry to instance in the Game class to process the information
+# then examine if the letter is a correct guess, if it is, makes it
+# show up on the canvass, if it isnn't,increment the number of wrong guesses.
+# at last, examine if users have used up all guessing chances or have guesses
+# all the letters in the word. Delete the input in the entry box at the end.
+# coded by Olivia.
 
   def __guess_letter(self, event):
     
@@ -269,7 +276,11 @@ class HangmanGUI:
 
     self.__guess_entry_box.delete(0, END)
     return
-
+  
+# call back function that's written for multi player mode: set up the word and category 
+# that's put by user in the instance of Game class. Display error message if
+# the game doesn't have a result yet (win or lose) delete all the input of
+# entries at the end.
   def __set_word(self):
 
     word = self.__set_word_entry_box.get()
@@ -314,6 +325,9 @@ class HangmanGUI:
     self.__set_word_entry_box.delete(0, END)
     self.__set_category_entry_box.delete(0, END)
     return
+# fcall back unction that's written for single player mode: pick a random word in the
+# pre-made dictiionary for the user to guess. Displaying error message if the
+# game isn't finished yet.
 
   def __set_random_word(self):
     if self.__game == None:
@@ -355,7 +369,9 @@ class HangmanGUI:
     return
   
   #Mutators-------------------------------------------------------------------
-
+# Functions that will Draw a body part of the hangman each time 
+# the user guesses wrong, the drawing will happen in the Canvass
+# Class, coded by Tianhao
   def __draw_lines(self):
     i = 0
     word = self.__word.get_word()
@@ -396,13 +412,17 @@ class HangmanGUI:
     for position in position_list:
        coordinates=self.LETTER_INDEX_POSITIONS[position]
        self.__canvas.create_text(coordinates, text=letter, \
+
                                  font=self.CANVAS_FONT)
+  #Display Winning message when the game is won, and reset the game when the
+  # user wants to play the game again, coded by Tianhao
   def __win_game(self):
     answer = messagebox.askyesno("Question",\
       "Congratulation! Do you want to try this Game again?")
     if answer==True:
       self.__reset_game()
-
+      
+  #Display Losing message
   def __lose_game(self):
 
     message = 'Sad! You have used up all chances. The correct word was: \n' +\
@@ -415,7 +435,8 @@ class HangmanGUI:
     if answer == True:
      
       self.__reset_game()
-
+ # reset the game by clearing instances and values of canvass,
+ # Coded by Olivia
   def __reset_game(self):
     self.__game = None
     self.__word = None
@@ -426,10 +447,12 @@ class HangmanGUI:
     return
 
   #Predicates-----------------------------------------------------------------
-
+#Examine if the input is a letter.
   def __is_valid_letter(self, letter):
     return letter.isalpha() and len(letter)==1
-
+  
+#Examine if the word set in Multiplayer mode is valid (all made of letters,
+# word lenth shouldn't exceed 12) Coded by Olivia
   def __is_valid_word(self, set_word):
     word_list = set_word.split(' ')
     for word in word_list:
